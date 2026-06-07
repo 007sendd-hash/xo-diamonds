@@ -1,10 +1,27 @@
 ---
 // XO Diamonds – Catalog Page
-// Full product grid with filters.
 import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
 
 const pageTitle = "Каталог украшений";
-const pageDescription = "Каталог ювелирных украшений XO Diamonds с CVD бриллиантами. Кольца, серьги, подвески, браслеты из золота 585 пробы.";
+const pageDescription =
+  "Каталог ювелирных украшений XO Diamonds с CVD бриллиантами. Кольца, серьги, подвески, браслеты из золота 585 пробы.";
+
+const base = import.meta.env.BASE_URL;
+const all = await getCollection("products");
+const productsJSON = JSON.stringify(
+  all.map((p) => {
+    const raw = p.data.images[0] ?? "/images/placeholder.jpg";
+    return {
+      slug: p.slug,
+      title: p.data.title,
+      price: p.data.price,
+      category: p.data.category,
+      isNew: p.data.isNew,
+      image: base + raw.replace(/^\//, ""),
+    };
+  })
+);
 ---
 
 <Base title={pageTitle} description={pageDescription}>
@@ -21,78 +38,7 @@ const pageDescription = "Каталог ювелирных украшений XO
   </section>
 
   <!-- Catalog Grid -->
-  <section
-    class="section-sm pb-20"
-    x-data="{
-      category: 'all',
-      sort: 'default',
-      products: [
-        {
-          slug: 'ring-solitaire-cvd-1-5ct',
-          title: 'Кольцо Solitaire CVD 1.5ct',
-          price: 185000,
-          category: 'кольца',
-          isNew: true,
-          image: '/images/products/ring-solitaire-1.jpg'
-        },
-        {
-          slug: 'earrings-cvd-stud-0-8ct',
-          title: 'Серьги-пусеты CVD 0.8ct',
-          price: 120000,
-          category: 'серьги',
-          isNew: true,
-          image: '/images/products/earrings-stud-1.jpg'
-        },
-        {
-          slug: 'pendant-cvd-cross-1ct',
-          title: 'Подвеска Cross CVD 1ct',
-          price: 95000,
-          category: 'подвески',
-          isNew: false,
-          image: '/images/products/pendant-cross-1.jpg'
-        },
-        {
-          slug: 'bracelet-tennis-cvd-2ct',
-          title: 'Браслет Tennis CVD 2ct',
-          price: 250000,
-          category: 'браслеты',
-          isNew: false,
-          image: '/images/products/bracelet-tennis-1.jpg'
-        },
-        {
-          slug: 'ring-eternity-cvd-1ct',
-          title: 'Кольцо Eternity CVD 1ct',
-          price: 165000,
-          category: 'кольца',
-          isNew: false,
-          image: '/images/products/ring-eternity-1.jpg'
-        },
-        {
-          slug: 'earrings-drop-cvd-1-2ct',
-          title: 'Серьги Drop CVD 1.2ct',
-          price: 145000,
-          category: 'серьги',
-          isNew: false,
-          image: '/images/products/earrings-drop-1.jpg'
-        }
-      ],
-      get filtered() {
-        let items = this.products;
-        if (this.category !== 'all') {
-          items = items.filter(p => p.category === this.category);
-        }
-        if (this.sort === 'price-asc') {
-          items = items.slice().sort((a, b) => a.price - b.price);
-        } else if (this.sort === 'price-desc') {
-          items = items.slice().sort((a, b) => b.price - a.price);
-        }
-        return items;
-      },
-      formatPrice(n) {
-        return new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
-      }
-    }"
-  >
+  <section class="section-sm pb-20" x-data="catalog">
     <div class="container">
       <!-- Filters -->
       <div class="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-gray-100">
@@ -107,7 +53,7 @@ const pageDescription = "Каталог ювелирных украшений XO
           ].map((f) => (
             <button
               class="text-xs tracking-[0.08em] uppercase px-4 py-1.5 border transition-colors"
-              :class="category === '{f.value}' ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-black text-gray-600'"
+              :class={`category === '${f.value}' ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-black text-gray-600'`}
               @click={`category = '${f.value}'`}
             >
               {f.label}
@@ -130,7 +76,7 @@ const pageDescription = "Каталог ювелирных украшений XO
       <div class="grid-3">
         <template x-for="p in filtered" :key="p.slug">
           <div class="product-card group">
-            <a :href="`/catalog/${p.slug}/`" class="block">
+            <a :href="'./' + p.slug + '/'">
               <div class="img-zoom relative bg-gray-100">
                 <img
                   :src="p.image"
@@ -163,3 +109,34 @@ const pageDescription = "Каталог ювелирных украшений XO
     </div>
   </section>
 </Base>
+
+<script is:inline>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("catalog", () => {
+      const el = document.getElementById("catalog-data");
+      const products = el ? JSON.parse(el.textContent || "[]") : [];
+      return {
+        category: "all",
+        sort: "default",
+        products,
+        get filtered() {
+          let items = this.products;
+          if (this.category !== "all") {
+            items = items.filter((p) => p.category === this.category);
+          }
+          if (this.sort === "price-asc") {
+            items = items.slice().sort((a, b) => a.price - b.price);
+          } else if (this.sort === "price-desc") {
+            items = items.slice().sort((a, b) => b.price - a.price);
+          }
+          return items;
+        },
+        formatPrice(n) {
+          return new Intl.NumberFormat("ru-RU").format(n) + " ₽";
+        },
+      };
+    });
+  });
+</script>
+
+<template id="catalog-data">{productsJSON}</template>

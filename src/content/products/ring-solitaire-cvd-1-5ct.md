@@ -8,7 +8,6 @@ featured: true
 images:
   - "/images/products/ring-solitaire-1.jpg"
   - "/images/products/ring-solitaire-2.jpg"
-  - "/images/products/ring-solitaire-3.jpg"
 material: "Золото 585 пробы (белое)"
 carat: "1.5 карата"
 diamondType: "CVD (лабораторно выращенный)"

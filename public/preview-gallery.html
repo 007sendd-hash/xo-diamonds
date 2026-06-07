@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview – Extracted Images</title>
+<style>
+  body { font-family: sans-serif; background: #111; color: #fff; padding: 20px; }
+  h1 { margin-bottom: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .card { background: #1a1a1a; border-radius: 8px; overflow: hidden; }
+  .card img { width: 100%; display: block; }
+  .card .label { padding: 10px; font-size: 13px; color: #aaa; }
+</style>
+</head>
+<body>
+<h1>Извлечённые изображения (23 шт)</h1>
+<div class="grid" id="grid"></div>
+<script>
+const images = [
+  "pdf08_Im1.jpg","pdf08_Im2.jpg",
+  "pdf09_Im6.jpg","pdf09_Im7.jpg",
+  "pdf10_Im10.jpg","pdf10_Im11.jpg",
+  "pdf11_Im15.jpg","pdf11_Im16.jpg","pdf11_Im17.jpg","pdf11_Im18.jpg","pdf11_Im19.jpg","pdf11_Im20.jpg",
+  "pdf12_Im28.jpg","pdf12_Im29.jpg","pdf12_Im30.jpg","pdf12_Im31.jpg","pdf12_Im32.jpg","pdf12_Im33.jpg","pdf12_Im34.jpg",
+  "pdf13_Im35.jpg","pdf13_Im36.jpg",
+  "pdf14_Im40.jpg","pdf14_Im41.jpg"
+];
+const grid = document.getElementById('grid');
+images.forEach(fn => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = '<img src="' + fn + '" loading="lazy"><div class="label">' + fn + '</div>';
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>

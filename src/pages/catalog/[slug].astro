@@ -19,12 +19,17 @@ interface Props {
 const { product } = Astro.props;
 const { data } = product;
 
+const base = import.meta.env.BASE_URL;
+
+// Prep images with base path for Alpine gallery
+const images = data.images.map((img) => base + img.replace(/^\//, ""));
+const firstImage = images[0] ?? (base + "images/placeholder.jpg");
+
 const pageTitle = data.title;
 const pageDescription = `${data.title} — ${data.material ?? "золото 585 пробы"}, бриллиант ${data.diamondType ?? "CVD"} ${data.carat ?? ""}. ${(data.description ?? "").slice(0, 120)}...`;
-const base = import.meta.env.BASE_URL;
 ---
 
-<Base title={pageTitle} description={pageDescription} ogImage={data.images[0]}>
+<Base title={pageTitle} description={pageDescription} ogImage={firstImage}>
   <section class="section">
     <div class="container">
       <!-- Breadcrumbs -->
@@ -39,8 +44,8 @@ const base = import.meta.env.BASE_URL;
       <div
         class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20"
         x-data={`{
-          activeImage: '${data.images[0] ?? "/images/placeholder.jpg"}',
-          images: ${JSON.stringify(data.images)},
+          activeImage: '${firstImage}',
+          images: ${JSON.stringify(images)},
           selectedSize: null,
           adding: false,
           added: false,
@@ -82,7 +87,7 @@ const base = import.meta.env.BASE_URL;
             />
           </div>
           <div class="flex gap-3">
-            {data.images.map((img, i) => (
+            {images.map((img, i) => (
               <button
                 class="w-20 h-24 bg-gray-100 overflow-hidden border-2 transition-colors"
                 :class="{ 'border-black': activeImage === img, 'border-transparent': activeImage !== img }"
