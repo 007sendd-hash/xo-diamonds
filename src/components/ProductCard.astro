@@ -1,0 +1,41 @@
+---
+// XO Diamonds – Product Card
+// Used on catalog, home, collections pages.
+export interface Props {
+  slug: string;
+  title: string;
+  price: number;
+  images: string[];
+  category: string;
+  isNew?: boolean;
+}
+
+const { slug, title, price, images, category, isNew } = Astro.props;
+const mainImage = images[0] ?? "/images/placeholder.jpg";
+const priceFormatted = new Intl.NumberFormat("ru-RU").format(price);
+---
+
+<a href={`/catalog/${slug}/`} class="product-card group block">
+  <div class="img-zoom relative bg-gray-100">
+    <img
+      src={mainImage}
+      alt={title}
+      loading="lazy"
+      width="600"
+      height="800"
+      class="w-full aspect-[3/4] object-cover"
+    />
+    {
+      isNew && (
+        <span class="absolute top-3 left-3 bg-black text-white text-[0.625rem] tracking-[0.15em] uppercase px-2 py-0.5">
+          Новинка
+        </span>
+      )
+    }
+  </div>
+  <div class="product-info mt-4">
+    <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">{category}</span>
+    <h3 class="product-title mt-1">{title}</h3>
+    <p class="product-price mt-1">{priceFormatted} ₽</p>
+  </div>
+</a>

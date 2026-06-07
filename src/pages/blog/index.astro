@@ -1,0 +1,69 @@
+---
+// XO Diamonds – Blog Index
+import Base from "../../layouts/Base.astro";
+
+const pageTitle = "Блог";
+const pageDescription = "Блог XO Diamonds — статьи о CVD бриллиантах, стиле, ювелирных трендах и уходе за украшениями.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section class="section-sm">
+    <div class="container max-w-2xl">
+      <span class="gold-line"></span>
+      <h1 class="mb-4">Блог</h1>
+      <p class="text-gray-500 mb-12">
+        Статьи о CVD бриллиантах, ювелирных трендах и стиле.
+      </p>
+
+      <div class="space-y-8">
+        <article class="border-b border-gray-100 pb-8">
+          <span class="text-xs tracking-[0.1em] uppercase text-gray-400">Гид</span>
+          <h3 class="text-xl font-serif mt-2 mb-2">
+            <a href="/guide/cvd-diamonds/" class="hover:text-gray-600 transition-colors">
+              Что такое CVD бриллианты: полный гид
+            </a>
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Технология выращивания, отличие от природных, сертификация — всё, что нужно знать о лабораторных бриллиантах.
+          </p>
+        </article>
+
+        <article class="border-b border-gray-100 pb-8">
+          <span class="text-xs tracking-[0.1em] uppercase text-gray-400">Гид</span>
+          <h3 class="text-xl font-serif mt-2 mb-2">
+            <a href="/guide/how-to-choose/" class="hover:text-gray-600 transition-colors">
+              Как выбрать украшение с бриллиантом CVD
+            </a>
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Практические советы по выбору колец, серёг, подвесок и браслетов с лабораторно выращенными бриллиантами.
+          </p>
+        </article>
+
+        <article class="border-b border-gray-100 pb-8">
+          <span class="text-xs tracking-[0.1em] uppercase text-gray-400">Стиль</span>
+          <h3 class="text-xl font-serif mt-2 mb-2">
+            <a href="/blog/how-to-wear-diamonds/" class="hover:text-gray-600 transition-colors">
+              Как носить бриллианты каждый день
+            </a>
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Бриллианты — не только для красной дорожки. Минималистичные украшения с CVD бриллиантами в повседневном гардеробе.
+          </p>
+        </article>
+
+        <article class="border-b border-gray-100 pb-8">
+          <span class="text-xs tracking-[0.1em] uppercase text-gray-400">Новости</span>
+          <h3 class="text-xl font-serif mt-2 mb-2">
+            <a href="/blog/why-cvd-diamonds/" class="hover:text-gray-600 transition-colors">
+              Почему CVD бриллианты — это будущее ювелирного рынка
+            </a>
+          </h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Экологичность, этика и доступность: три причины, по которым лабораторно выращенные бриллианты меняют индустрию.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>

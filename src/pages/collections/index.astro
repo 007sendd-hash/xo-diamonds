@@ -1,0 +1,97 @@
+---
+// XO Diamonds – Collections Page
+import Base from "../../layouts/Base.astro";
+
+const pageTitle = "Коллекции";
+const pageDescription = "Коллекции ювелирных украшений XO Diamonds. Solitaire, Eternity, Minimal — каждая коллекция рассказывает свою историю.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section class="section-sm">
+    <div class="container">
+      <span class="gold-line"></span>
+      <h1 class="mb-4">Коллекции</h1>
+      <p class="text-gray-500 mb-12 max-w-lg">
+        Каждая коллекция XO Diamonds — это отдельная история, воплощённая
+        в золоте 585 пробы и CVD бриллиантах.
+      </p>
+
+      <div class="space-y-8 md:space-y-12">
+        <!-- Solitaire -->
+        <a href="/collections/solitaire/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="img-zoom bg-gray-100 order-2 md:order-1">
+            <img
+              src="/images/collection-solitaire.jpg"
+              alt="Коллекция Solitaire"
+              width="700"
+              height="500"
+              class="w-full aspect-[4/3] object-cover"
+            />
+          </div>
+          <div class="order-1 md:order-2">
+            <span class="gold-line"></span>
+            <h2 class="mb-3 group-hover:text-gray-600 transition-colors">Solitaire</h2>
+            <p class="text-gray-500 leading-relaxed">
+              Вечная классика помолвочных колец. Один центральный бриллиант CVD
+              в минималистичной оправе Tiffany. Сдержанная элегантность,
+              которая никогда не выйдет из моды.
+            </p>
+            <span class="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-gray-400 group-hover:text-black transition-colors">
+              Смотреть коллекцию →
+            </span>
+          </div>
+        </a>
+
+        <!-- Eternity -->
+        <a href="/collections/eternity/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="img-zoom bg-gray-100 order-2 md:order-2">
+            <img
+              src="/images/collection-eternity.jpg"
+              alt="Коллекция Eternity"
+              width="700"
+              height="500"
+              class="w-full aspect-[4/3] object-cover"
+            />
+          </div>
+          <div class="order-1 md:order-1">
+            <span class="gold-line"></span>
+            <h2 class="mb-3 group-hover:text-gray-600 transition-colors">Eternity</h2>
+            <p class="text-gray-500 leading-relaxed">
+              Бесконечное сияние бриллиантовой дорожки. Кольца и браслеты Eternity
+              с непрерывной линией CVD бриллиантов — символ вечной любви
+              и бесконечной красоты.
+            </p>
+            <span class="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-gray-400 group-hover:text-black transition-colors">
+              Смотреть коллекцию →
+            </span>
+          </div>
+        </a>
+
+        <!-- Minimal -->
+        <a href="/collections/minimal/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div class="img-zoom bg-gray-100 order-2 md:order-1">
+            <img
+              src="/images/collection-minimal.jpg"
+              alt="Коллекция Minimal"
+              width="700"
+              height="500"
+              class="w-full aspect-[4/3] object-cover"
+            />
+          </div>
+          <div class="order-1 md:order-2">
+            <span class="gold-line"></span>
+            <h2 class="mb-3 group-hover:text-gray-600 transition-colors">Minimal</h2>
+            <p class="text-gray-500 leading-relaxed">
+              Чистые линии и сдержанная геометрия для повседневной элегантности.
+              Бриллиант CVD как акцент, а не как декларация. Для тех,
+              кто ценит красоту в простоте.
+            </p>
+            <span class="inline-block mt-4 text-xs tracking-[0.15em] uppercase text-gray-400 group-hover:text-black transition-colors">
+              Смотреть коллекцию →
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,224 @@
+---
+// XO Diamonds – Product Detail Page
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import type { CollectionEntry } from "astro:content";
+
+export const getStaticPaths = async () => {
+  const products = await getCollection("products");
+  return products.map((p) => ({
+    params: { slug: p.slug },
+    props: { product: p },
+  }));
+};
+
+interface Props {
+  product: CollectionEntry<"products">;
+}
+
+const { product } = Astro.props;
+const { data } = product;
+
+const pageTitle = data.title;
+const pageDescription = `${data.title} — ${data.material ?? "золото 585 пробы"}, бриллиант ${data.diamondType ?? "CVD"} ${data.carat ?? ""}. ${(data.description ?? "").slice(0, 120)}...`;
+---
+
+<Base title={pageTitle} description={pageDescription} ogImage={data.images[0]}>
+  <section class="section">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="text-xs tracking-[0.05em] text-gray-400 mb-8">
+        <a href="/" class="hover:text-black transition-colors">Главная</a>
+        <span class="mx-2">/</span>
+        <a href="/catalog/" class="hover:text-black transition-colors">Каталог</a>
+        <span class="mx-2">/</span>
+        <span class="text-black">{data.title}</span>
+      </nav>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20"
+        x-data={`{
+          activeImage: '${data.images[0] ?? "/images/placeholder.jpg"}',
+          images: ${JSON.stringify(data.images)},
+          selectedSize: null,
+          adding: false,
+          added: false,
+          selectImage(src) { this.activeImage = src; },
+          addToCart() {
+            if (!this.selectedSize && ${data.sizes.length} > 0) return;
+            this.adding = true;
+            const item = {
+              slug: '${product.slug}',
+              title: '${data.title.replace(/'/g, "\\'")}',
+              price: ${data.price},
+              image: this.activeImage,
+              size: this.selectedSize,
+              qty: 1,
+            };
+            const cart = JSON.parse(localStorage.getItem('xo-cart') || '[]');
+            const idx = cart.findIndex(i => i.slug === item.slug && i.size === item.size);
+            if (idx >= 0) {
+              cart[idx].qty += 1;
+            } else {
+              cart.push(item);
+            }
+            localStorage.setItem('xo-cart', JSON.stringify(cart));
+            window.dispatchEvent(new CustomEvent('cart-updated'));
+            this.added = true;
+            setTimeout(() => { this.added = false; this.adding = false; }, 1500);
+          }
+        }`}
+      >
+        <!-- Gallery -->
+        <div>
+          <div class="img-zoom bg-gray-100 mb-4">
+            <img
+              :src="activeImage"
+              alt={data.title}
+              width="700"
+              height="900"
+              class="w-full aspect-[4/5] object-cover"
+            />
+          </div>
+          <div class="flex gap-3">
+            {data.images.map((img, i) => (
+              <button
+                class="w-20 h-24 bg-gray-100 overflow-hidden border-2 transition-colors"
+                :class="{ 'border-black': activeImage === img, 'border-transparent': activeImage !== img }"
+                @click="selectImage('{img}')"
+              >
+                <img src={img} alt={`${data.title} – фото ${i + 1}`} class="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div>
+          <span class="gold-line"></span>
+          <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">{data.category}</span>
+          <h1 class="mt-2 mb-2">{data.title}</h1>
+          <p class="text-xl text-gray-600 mb-8">
+            {new Intl.NumberFormat("ru-RU").format(data.price)} ₽
+          </p>
+
+          <p class="text-gray-600 leading-relaxed mb-8">
+            {data.description}
+          </p>
+
+          <!-- Specs -->
+          <div class="border-t border-gray-100 pt-6 mb-6 space-y-3 text-sm">
+            {data.material && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Материал</span>
+                <span>{data.material}</span>
+              </div>
+            )}
+            {data.carat && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Вес бриллианта</span>
+                <span>{data.carat}</span>
+              </div>
+            )}
+            {data.diamondType && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Тип бриллианта</span>
+                <span>{data.diamondType}</span>
+              </div>
+            )}
+            {data.cut && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Огранка</span>
+                <span>{data.cut}</span>
+              </div>
+            )}
+            {data.color && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Цвет</span>
+                <span>{data.color}</span>
+              </div>
+            )}
+            {data.clarity && (
+              <div class="flex justify-between">
+                <span class="text-gray-400">Чистота</span>
+                <span>{data.clarity}</span>
+              </div>
+            )}
+          </div>
+
+          <!-- Size selector -->
+          {
+            data.sizes.length > 0 && (
+              <div class="mb-6">
+                <span class="text-xs tracking-[0.1em] uppercase text-gray-400 mb-3 block">Размер</span>
+                <div class="flex flex-wrap gap-2">
+                  {data.sizes.map((s) => (
+                    <button
+                      class="w-12 h-10 border text-xs transition-colors"
+                      :class={`selectedSize === ${s} ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-black'`}
+                      @click={`selectedSize = ${s}`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          <!-- Add to cart -->
+          <button
+            class="btn btn-primary btn-lg w-full sm:w-auto"
+            :class={`{ 'opacity-50 pointer-events-none': !selectedSize && ${data.sizes.length} > 0 }`}
+            :disabled="adding"
+            @click="addToCart()"
+          >
+            <span x-show="!adding && !added">Добавить в корзину</span>
+            <span x-show="adding && !added">Добавление...</span>
+            <span x-show="added">✓ Добавлено</span>
+          </button>
+          <p x-show={`!selectedSize && ${data.sizes.length} > 0`} class="text-xs text-gray-400 mt-2">
+            Выберите размер
+          </p>
+        </div>
+      </div>
+
+      <!-- Similar products placeholder -->
+      <div class="mt-20 pt-16 border-t border-gray-100">
+        <span class="gold-line"></span>
+        <h3 class="mb-8">Похожие изделия</h3>
+        <div class="grid-3">
+          <div class="product-card">
+            <div class="img-zoom bg-gray-100">
+              <img src="/images/products/earrings-stud-1.jpg" alt="Серьги-пусеты" class="w-full aspect-[3/4] object-cover" />
+            </div>
+            <div class="mt-4">
+              <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Серьги</span>
+              <h4 class="text-lg font-serif mt-1">Серьги-пусеты CVD 0.8ct</h4>
+              <p class="text-sm text-gray-600 mt-1">120 000 ₽</p>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="img-zoom bg-gray-100">
+              <img src="/images/products/pendant-cross-1.jpg" alt="Подвеска Cross" class="w-full aspect-[3/4] object-cover" />
+            </div>
+            <div class="mt-4">
+              <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Подвески</span>
+              <h4 class="text-lg font-serif mt-1">Подвеска Cross CVD 1ct</h4>
+              <p class="text-sm text-gray-600 mt-1">95 000 ₽</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  // Backward compat: if someone lands on /catalog/ring-solitaire-cvd-1-5ct/
+  // we handle size selection state
+  document.addEventListener("DOMContentLoaded", () => {
+    const sizes = document.querySelectorAll('[x-data]');
+    // Alpine will handle it
+  });
+</script>

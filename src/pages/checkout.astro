@@ -1,0 +1,249 @@
+---
+// XO Diamonds – Checkout Page
+import Base from "../layouts/Base.astro";
+
+const pageTitle = "Оформление заказа";
+const pageDescription = "Оформите заказ на ювелирные украшения XO Diamonds. Быстрый и простой процесс покупки.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section
+    class="section-sm min-h-[60vh]"
+    x-data="{
+      cart: [],
+      total: 0,
+      form: {
+        name: '',
+        phone: '',
+        email: '',
+        contact: 'telegram',
+        address: '',
+        comment: ''
+      },
+      submitted: false,
+      sending: false,
+      error: null,
+      init() {
+        this.loadCart();
+        window.addEventListener('cart-updated', () => this.loadCart());
+      },
+      loadCart() {
+        this.cart = JSON.parse(localStorage.getItem('xo-cart') || '[]');
+        this.total = this.cart.reduce((s, i) => s + i.price * i.qty, 0);
+      },
+      formatPrice(n) {
+        return new Intl.NumberFormat('ru-RU').format(n);
+      },
+      async submitOrder() {
+        this.sending = true;
+        this.error = null;
+
+        const order = {
+          id: 'XO-' + Date.now().toString(36).toUpperCase(),
+          date: new Date().toISOString(),
+          customer: this.form,
+          items: this.cart.map(i => ({
+            title: i.title,
+            price: i.price,
+            qty: i.qty,
+            size: i.size,
+            total: i.price * i.qty
+          })),
+          total: this.total
+        };
+
+        // Send to Telegram via a bot webhook
+        // Replace BOT_TOKEN and CHAT_ID with your values
+        const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN';
+        const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID';
+
+        const message = [
+          '💎 *Новый заказ XO Diamonds*',
+          '',
+          `📦 *Заказ #:* ${order.id}`,
+          `📅 *Дата:* ${new Date(order.date).toLocaleString('ru-RU')}`,
+          '',
+          '*Клиент:*',
+          `👤 Имя: ${order.customer.name}`,
+          `📱 Телефон: ${order.customer.phone}`,
+          `📧 Email: ${order.customer.email || '—'}`,
+          `💬 Связь: ${order.customer.contact === 'telegram' ? 'Telegram' : order.customer.contact === 'whatsapp' ? 'WhatsApp' : 'Телефон'}`,
+          `📍 Адрес: ${order.customer.address || '—'}`,
+          `📝 Комментарий: ${order.customer.comment || '—'}`,
+          '',
+          '*Товары:*',
+          ...order.items.map(i => `  • ${i.title} (размер ${i.size ?? '—'}) × ${i.qty} = ${this.formatPrice(i.total)} ₽`),
+          '',
+          `💰 *Итого:* ${this.formatPrice(order.total)} ₽`,
+        ].join('\n');
+
+        try {
+          const resp = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: TELEGRAM_CHAT_ID,
+              text: message,
+              parse_mode: 'Markdown'
+            })
+          });
+
+          const data = await resp.json();
+          if (data.ok) {
+            this.submitted = true;
+            localStorage.removeItem('xo-cart');
+            window.dispatchEvent(new CustomEvent('cart-updated'));
+          } else {
+            throw new Error(data.description || 'Ошибка отправки');
+          }
+        } catch (e) {
+          console.error('Telegram send error:', e);
+          this.error = 'Не удалось отправить заказ. Свяжитесь с нами через Telegram: @xodiamondss';
+        } finally {
+          this.sending = false;
+        }
+      }
+    }"
+  >
+    <div class="container max-w-2xl">
+      <span class="gold-line"></span>
+      <h1 class="mb-4">Оформление заказа</h1>
+
+      <!-- Empty cart redirect -->
+      <div x-show="cart.length === 0 && !submitted" class="py-16 text-center">
+        <p class="text-gray-400 mb-6">Ваша корзина пуста — нечего оформлять</p>
+        <a href="/catalog/" class="btn btn-outline">Перейти в каталог</a>
+      </div>
+
+      <!-- Success -->
+      <div x-show="submitted" class="py-16 text-center" x-cloak>
+        <span class="gold-line centered"></span>
+        <h3 class="mb-4">Заказ принят</h3>
+        <p class="text-gray-500 mb-8 max-w-md mx-auto">
+          Спасибо! Мы свяжемся с вами в ближайшее время для подтверждения заказа
+          через выбранный способ связи.
+        </p>
+        <a href="/catalog/" class="btn btn-primary">Продолжить покупки</a>
+      </div>
+
+      <!-- Error -->
+      <div x-show="error" class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 mb-6 text-sm" x-cloak>
+        <p x-text="error"></p>
+      </div>
+
+      <!-- Form -->
+      <div x-show="cart.length > 0 && !submitted" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8" x-cloak>
+        <!-- Order summary -->
+        <div class="order-2 md:order-1">
+          <h4 class="text-xs tracking-[0.15em] uppercase text-gray-400 mb-4">Ваш заказ</h4>
+          <div class="space-y-3 mb-6">
+            <template x-for="item in cart" :key="item.slug + item.size">
+              <div class="flex justify-between text-sm">
+                <span>
+                  <span x-text="item.title"></span>
+                  <span class="text-gray-400" x-show="item.size"> · разм. <span x-text="item.size"></span></span>
+                  <span class="text-gray-400"> × <span x-text="item.qty"></span></span>
+                </span>
+                <span><span x-text="formatPrice(item.price * item.qty)"></span> ₽</span>
+              </div>
+            </template>
+          </div>
+          <div class="border-t border-gray-100 pt-4 flex justify-between text-base font-medium">
+            <span>Итого</span>
+            <span><span x-text="formatPrice(total)"></span> ₽</span>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">
+            После оформления мы свяжемся с вами для подтверждения и уточнения деталей доставки и оплаты.
+          </p>
+        </div>
+
+        <!-- Contact form -->
+        <div class="order-1 md:order-2">
+          <h4 class="text-xs tracking-[0.15em] uppercase text-gray-400 mb-6">Контактные данные</h4>
+          <form @submit.prevent="submitOrder()" class="space-y-5">
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">Имя *</label>
+              <input
+                type="text"
+                x-model="form.name"
+                required
+                class="w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
+                placeholder="Ваше имя"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">Телефон *</label>
+              <input
+                type="tel"
+                x-model="form.phone"
+                required
+                class="w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
+                placeholder="+7 (999) 123-45-67"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">Email</label>
+              <input
+                type="email"
+                x-model="form.email"
+                class="w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
+                placeholder="email@example.com"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">
+                Способ связи *
+              </label>
+              <div class="flex gap-3">
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" x-model="form.contact" value="telegram" class="accent-black" checked />
+                  Telegram
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" x-model="form.contact" value="whatsapp" class="accent-black" />
+                  WhatsApp
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" x-model="form.contact" value="phone" class="accent-black" />
+                  Звонок
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">Адрес доставки</label>
+              <textarea
+                x-model="form.address"
+                rows="2"
+                class="w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors resize-none"
+                placeholder="Город, улица, дом, квартира"
+              ></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs tracking-[0.08em] uppercase text-gray-500 mb-1.5">Комментарий</label>
+              <textarea
+                x-model="form.comment"
+                rows="2"
+                class="w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors resize-none"
+                placeholder="Пожелания к заказу, вопросы"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary w-full"
+              :disabled="sending"
+            >
+              <span x-show="!sending">Отправить заказ</span>
+              <span x-show="sending">Отправка...</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

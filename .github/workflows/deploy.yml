@@ -1,0 +1,37 @@
+name: Deploy to beget VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: XoDiamonds/xo-diamonds-site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: XoDiamonds/xo-diamonds-site
+        run: npm ci
+
+      - name: Build Astro site
+        working-directory: XoDiamonds/xo-diamonds-site
+        run: npm run build
+
+      - name: Deploy to beget VPS via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.BEGET_HOST }}
+          username: ${{ secrets.BEGET_USER }}
+          key: ${{ secrets.BEGET_SSH_KEY }}
+          source: "XoDiamonds/xo-diamonds-site/dist/*"
+          target: ${{ secrets.BEGET_TARGET_PATH }}
+          strip_components: 3
+          rm: true

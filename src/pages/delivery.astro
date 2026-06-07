@@ -1,0 +1,78 @@
+---
+// XO Diamonds – Delivery Page
+import Base from "../layouts/Base.astro";
+
+const pageTitle = "Доставка и оплата";
+const pageDescription = "Условия доставки и оплаты ювелирных украшений XO Diamonds. Доставка по России, упаковка, сроки.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section class="section-sm">
+    <div class="container max-w-2xl">
+      <span class="gold-line"></span>
+      <h1 class="mb-4">Доставка и оплата</h1>
+
+      <!-- Delivery -->
+      <div class="mt-12 space-y-8">
+        <div>
+          <h3 class="text-lg mb-3">Способы доставки</h3>
+          <div class="space-y-6 text-gray-700 leading-relaxed text-sm">
+            <div>
+              <h4 class="font-medium text-black text-base mb-1">Курьерская доставка</h4>
+              <p>
+                Доставка курьерской службой по Москве и Санкт-Петербургу.
+                Срок — 1–2 рабочих дня. Стоимость — от 500 ₽, уточняется при оформлении.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-medium text-black text-base mb-1">Доставка по России</h4>
+              <p>
+                Отправка СДЭК или Почтой России. Срок — 3–7 рабочих дней.
+                Стоимость рассчитывается по тарифам службы доставки.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-medium text-black text-base mb-1">Самовывоз</h4>
+              <p>
+                Самовывоз из шоурума в Москве по предварительной договорённости.
+                Адрес уточняется при оформлении заказа.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-100 pt-8">
+          <h3 class="text-lg mb-3">Оплата</h3>
+          <p class="text-gray-700 leading-relaxed text-sm">
+            Мы работаем по предоплате. После оформления заказа наш менеджер
+            свяжется с вами для подтверждения деталей и вышлет ссылку на оплату
+            через удобный вам сервис (перевод на карту, СБП или другой способ).
+          </p>
+        </div>
+
+        <div class="border-t border-gray-100 pt-8">
+          <h3 class="text-lg mb-3">Упаковка</h3>
+          <p class="text-gray-700 leading-relaxed text-sm">
+            Каждое изделие упаковано в фирменную коробку XO Diamonds —
+            чёрный матовый футляр с золотым тиснением. В комплекте — сертификат
+            на бриллиант и руководство по уходу.
+          </p>
+        </div>
+
+        <div class="border-t border-gray-100 pt-8">
+          <h3 class="text-lg mb-3">Возврат</h3>
+          <p class="text-gray-700 leading-relaxed text-sm">
+            Вы можете вернуть изделие в течение 14 дней с момента получения,
+            если оно не было в использовании и сохранены все бирки и упаковка.
+            Изделия, изготовленные по индивидуальному заказу, возврату не подлежат.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-gray-100 text-center">
+        <p class="text-gray-400 text-sm mb-4">Остались вопросы?</p>
+        <a href="/contacts/" class="btn btn-outline">Связаться с нами</a>
+      </div>
+    </div>
+  </section>
+</Base>

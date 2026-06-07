@@ -1,0 +1,122 @@
+---
+// XO Diamonds – Cart Page
+import Base from "../layouts/Base.astro";
+
+const pageTitle = "Корзина";
+const pageDescription = "Ваша корзина покупок XO Diamonds. Оформите заказ на ювелирные украшения с CVD бриллиантами.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <section
+    class="section-sm min-h-[60vh]"
+    x-data="{
+      cart: [],
+      total: 0,
+      init() {
+        this.loadCart();
+        window.addEventListener('cart-updated', () => this.loadCart());
+      },
+      loadCart() {
+        this.cart = JSON.parse(localStorage.getItem('xo-cart') || '[]');
+        this.total = this.cart.reduce((s, i) => s + i.price * i.qty, 0);
+      },
+      updateQty(slug, size, qty) {
+        const c = this.cart.map(i =>
+          i.slug === slug && i.size === size ? { ...i, qty: Math.max(1, qty) } : i
+        );
+        localStorage.setItem('xo-cart', JSON.stringify(c));
+        this.loadCart();
+        window.dispatchEvent(new CustomEvent('cart-updated'));
+      },
+      removeItem(slug, size) {
+        const c = this.cart.filter(i => !(i.slug === slug && i.size === size));
+        localStorage.setItem('xo-cart', JSON.stringify(c));
+        this.loadCart();
+        window.dispatchEvent(new CustomEvent('cart-updated'));
+      },
+      formatPrice(n) {
+        return new Intl.NumberFormat('ru-RU').format(n);
+      }
+    }"
+  >
+    <div class="container">
+      <span class="gold-line"></span>
+      <h1 class="mb-4">Корзина</h1>
+
+      <!-- Empty cart -->
+      <div x-show="cart.length === 0" class="py-16 text-center">
+        <p class="text-gray-400 mb-6">Ваша корзина пуста</p>
+        <a href="/catalog/" class="btn btn-outline">Перейти в каталог</a>
+      </div>
+
+      <!-- Cart items -->
+      <div x-show="cart.length > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-8">
+        <!-- Items -->
+        <div class="lg:col-span-2 space-y-6">
+          <template x-for="(item, idx) in cart" :key="item.slug + item.size">
+            <div class="flex gap-6 pb-6 border-b border-gray-100">
+              <!-- Image -->
+              <div class="w-24 h-32 bg-gray-100 flex-shrink-0">
+                <img :src="item.image" :alt="item.title" class="w-full h-full object-cover" />
+              </div>
+              <!-- Info -->
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="font-serif text-lg" x-text="item.title"></h3>
+                  <p class="text-sm text-gray-400 mt-1" x-show="item.size">
+                    Размер: <span x-text="item.size"></span>
+                  </p>
+                  <p class="text-sm text-gray-600 mt-1">
+                    <span x-text="formatPrice(item.price)"></span> ₽
+                  </p>
+                </div>
+                <div class="flex items-center gap-6 mt-2">
+                  <!-- Qty -->
+                  <div class="flex items-center border border-gray-200">
+                    <button
+                      class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-black"
+                      @click="updateQty(item.slug, item.size, item.qty - 1)"
+                    >−</button>
+                    <span class="w-10 text-center text-sm" x-text="item.qty"></span>
+                    <button
+                      class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-black"
+                      @click="updateQty(item.slug, item.size, item.qty + 1)"
+                    >+</button>
+                  </div>
+                  <!-- Remove -->
+                  <button
+                    class="text-xs tracking-[0.08em] uppercase text-gray-400 hover:text-black transition-colors"
+                    @click="removeItem(item.slug, item.size)"
+                  >
+                    Удалить
+                  </button>
+                </div>
+              </div>
+              <!-- Line total -->
+              <div class="text-right flex-shrink-0">
+                <p class="font-medium">
+                  <span x-text="formatPrice(item.price * item.qty)"></span> ₽
+                </p>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- Summary -->
+        <div class="lg:col-span-1">
+          <div class="sticky top-24 bg-gray-50 p-8">
+            <h4 class="text-xs tracking-[0.15em] uppercase text-gray-400 mb-6">Сумма заказа</h4>
+            <div class="flex justify-between text-lg mb-1">
+              <span>Итого</span>
+              <span class="font-medium"><span x-text="formatPrice(total)"></span> ₽</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-8">Доставка рассчитывается при оформлении</p>
+            <a href="/checkout/" class="btn btn-primary w-full text-center">
+              Оформить заказ
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

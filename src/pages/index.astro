@@ -1,0 +1,251 @@
+---
+// XO Diamonds – Home Page
+// Hero + Featured Products + Brand Intro
+import Base from "../layouts/Base.astro";
+
+const pageTitle = "XO Diamonds";
+const pageDescription =
+  "Премиальные ювелирные украшения с CVD бриллиантами. Лабораторная чистота, природная красота. Откройте коллекцию XO Diamonds.";
+---
+
+<Base title={pageTitle} description={pageDescription}>
+  <!-- ============================================================
+  HERO
+  ============================================================ -->
+  <section class="relative min-h-[90vh] flex items-center bg-black text-white overflow-hidden">
+    <!-- Hero BG -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80 z-10"></div>
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-70"
+      style="background-image: url('/images/hero-bg.jpg')"
+    ></div>
+
+    <!-- Content -->
+    <div class="container relative z-20 py-20 md:py-0">
+      <div class="max-w-2xl">
+        <span class="gold-line"></span>
+        <h1 class="text-white mb-6 animate-fade-up">
+          Лабораторная чистота,<br />природная красота
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl mb-10 max-w-lg animate-fade-up" style="animation-delay: 0.15s;">
+          Ювелирные украшения с CVD бриллиантами для тех, кто выбирает осознанную роскошь.
+        </p>
+        <div class="flex flex-wrap gap-4 animate-fade-up" style="animation-delay: 0.3s;">
+          <a href="/catalog/" class="btn btn-primary btn-lg">Смотреть каталог</a>
+          <a href="/about/" class="btn btn-outline btn-lg !border-gray-500 !text-white hover:!border-white">О бренде</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-fade-in" style="animation-delay: 1s;">
+      <span class="block w-px h-12 bg-gradient-to-b from-gold to-transparent"></span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+  FEATURED PRODUCTS
+  ============================================================ -->
+  <section class="section">
+    <div class="container">
+      <span class="gold-line centered"></span>
+      <h2 class="text-center mb-2">Новые поступления</h2>
+      <p class="text-center text-gray-500 text-sm tracking-[0.05em] uppercase mb-12">
+        Избранные украшения этой недели
+      </p>
+
+      <div class="grid-3">
+        <!-- Product cards – hardcoded for now, later from content collection -->
+        <div class="product-card group">
+          <a href="/catalog/ring-solitaire-cvd-1-5ct/" class="block">
+            <div class="img-zoom relative bg-gray-100">
+              <img
+                src="/images/products/ring-solitaire-1.jpg"
+                alt="Кольцо Solitaire CVD 1.5ct"
+                width="600"
+                height="800"
+                class="w-full aspect-[3/4] object-cover"
+              />
+              <span class="absolute top-3 left-3 bg-black text-white text-[0.625rem] tracking-[0.15em] uppercase px-2 py-0.5">
+                Новинка
+              </span>
+            </div>
+            <div class="mt-4">
+              <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Кольца</span>
+              <h3 class="text-lg font-serif mt-1">Кольцо Solitaire CVD 1.5ct</h3>
+              <p class="text-sm text-gray-600 mt-1">185 000 ₽</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="product-card group">
+          <a href="/catalog/earrings-cvd-stud-0-8ct/" class="block">
+            <div class="img-zoom relative bg-gray-100">
+              <img
+                src="/images/products/earrings-stud-1.jpg"
+                alt="Серьги-пусеты CVD 0.8ct"
+                width="600"
+                height="800"
+                class="w-full aspect-[3/4] object-cover"
+              />
+              <span class="absolute top-3 left-3 bg-black text-white text-[0.625rem] tracking-[0.15em] uppercase px-2 py-0.5">
+                Новинка
+              </span>
+            </div>
+            <div class="mt-4">
+              <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Серьги</span>
+              <h3 class="text-lg font-serif mt-1">Серьги-пусеты CVD 0.8ct</h3>
+              <p class="text-sm text-gray-600 mt-1">120 000 ₽</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="product-card group">
+          <a href="/catalog/pendant-cvd-cross-1ct/" class="block">
+            <div class="img-zoom relative bg-gray-100">
+              <img
+                src="/images/products/pendant-cross-1.jpg"
+                alt="Подвеска Cross CVD 1ct"
+                width="600"
+                height="800"
+                class="w-full aspect-[3/4] object-cover"
+              />
+            </div>
+            <div class="mt-4">
+              <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Подвески</span>
+              <h3 class="text-lg font-serif mt-1">Подвеска Cross CVD 1ct</h3>
+              <p class="text-sm text-gray-600 mt-1">95 000 ₽</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="/catalog/" class="btn btn-outline">Весь каталог</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+  BRAND INTRO
+  ============================================================ -->
+  <section class="section bg-black text-white">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div class="img-zoom order-2 md:order-1">
+          <img
+            src="/images/brand-intro.jpg"
+            alt="XO Diamonds – лабораторная чистота"
+            width="700"
+            height="900"
+            class="w-full aspect-[4/5] object-cover"
+          />
+        </div>
+        <div class="order-1 md:order-2">
+          <span class="gold-line"></span>
+          <h2 class="text-white mb-6">Осознанная<br />роскошь</h2>
+          <p class="text-gray-300 text-base leading-relaxed mb-6">
+            XO Diamonds — ювелирный бренд, который переосмысляет понятие роскоши.
+            Мы используем исключительно лабораторно выращенные бриллианты CVD —
+            камни, идентичные природным по химическому составу и оптическим свойствам,
+            но полученные без вреда для планеты.
+          </p>
+          <p class="text-gray-400 text-base leading-relaxed mb-8">
+            Каждое изделие создаётся вручную из золота 585 пробы.
+            Безупречное качество, минималистичный дизайн, абсолютная прозрачность
+            происхождения каждого камня.
+          </p>
+          <a href="/about/" class="btn btn-gold">Узнать больше</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+  COLLECTIONS
+  ============================================================ -->
+  <section class="section">
+    <div class="container">
+      <span class="gold-line centered"></span>
+      <h2 class="text-center mb-2">Коллекции</h2>
+      <p class="text-center text-gray-500 text-sm tracking-[0.05em] uppercase mb-12">
+        Каждая история уникальна
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="/collections/solitaire/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+          <img
+            src="/images/collection-solitaire.jpg"
+            alt="Коллекция Solitaire"
+            width="500"
+            height="625"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+            <h3 class="text-white text-2xl mb-1">Solitaire</h3>
+            <p class="text-gray-300 text-sm">Вечная классика помолвочных колец</p>
+          </div>
+        </a>
+
+        <a href="/collections/eternity/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+          <img
+            src="/images/collection-eternity.jpg"
+            alt="Коллекция Eternity"
+            width="500"
+            height="625"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+            <h3 class="text-white text-2xl mb-1">Eternity</h3>
+            <p class="text-gray-300 text-sm">Бесконечное сияние бриллиантовой дорожки</p>
+          </div>
+        </a>
+
+        <a href="/collections/minimal/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+          <img
+            src="/images/collection-minimal.jpg"
+            alt="Коллекция Minimal"
+            width="500"
+            height="625"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
+            <h3 class="text-white text-2xl mb-1">Minimal</h3>
+            <p class="text-gray-300 text-sm">Чистые линии для повседневной элегантности</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+  SOCIALS CTA
+  ============================================================ -->
+  <section class="section-sm bg-gray-50">
+    <div class="container text-center max-w-xl">
+      <span class="gold-line centered"></span>
+      <h3 class="mb-4">Следите за брендом</h3>
+      <p class="text-gray-500 mb-8">
+        Новые поступления, закулисье и стиль — в нашем Instagram и Telegram.
+      </p>
+      <div class="flex items-center justify-center gap-6">
+        <a
+          href="https://instagram.com/xo_diamonds"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-outline"
+        >
+          Instagram
+        </a>
+        <a
+          href="https://t.me/xodiamondss"
+          target="_blank"
+          rel="noopener"
+          class="btn btn-primary"
+        >
+          Telegram
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
