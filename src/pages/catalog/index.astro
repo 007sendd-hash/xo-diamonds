@@ -110,11 +110,15 @@ const productsJSON = JSON.stringify(
   </section>
 </Base>
 
+<!-- Pass catalog data from server to client -->
+<script define:vars={{ productsJSON }}>
+  window.__xoCatalogData = productsJSON;
+</script>
+
 <script is:inline>
   document.addEventListener("alpine:init", () => {
     Alpine.data("catalog", () => {
-      const el = document.getElementById("catalog-data");
-      const products = el ? JSON.parse(el.textContent || "[]") : [];
+      const products = JSON.parse(window.__xoCatalogData || "[]");
       return {
         category: "all",
         sort: "default",
@@ -138,5 +142,3 @@ const productsJSON = JSON.stringify(
     });
   });
 </script>
-
-<template id="catalog-data">{productsJSON}</template>
