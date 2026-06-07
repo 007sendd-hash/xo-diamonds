@@ -4,6 +4,7 @@ import Base from "../../layouts/Base.astro";
 
 const pageTitle = "Коллекции";
 const pageDescription = "Коллекции ювелирных украшений XO Diamonds. Solitaire, Eternity, Minimal — каждая коллекция рассказывает свою историю.";
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={pageTitle} description={pageDescription}>
@@ -18,10 +19,10 @@ const pageDescription = "Коллекции ювелирных украшени�
 
       <div class="space-y-8 md:space-y-12">
         <!-- Solitaire -->
-        <a href="/collections/solitaire/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <a href={`${base}collections/solitaire/`} class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div class="img-zoom bg-gray-100 order-2 md:order-1">
             <img
-              src="/images/collection-solitaire.jpg"
+              src={`${base}images/collection-solitaire.jpg`}
               alt="Коллекция Solitaire"
               width="700"
               height="500"
@@ -43,10 +44,10 @@ const pageDescription = "Коллекции ювелирных украшени�
         </a>
 
         <!-- Eternity -->
-        <a href="/collections/eternity/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <a href={`${base}collections/eternity/`} class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div class="img-zoom bg-gray-100 order-2 md:order-2">
             <img
-              src="/images/collection-eternity.jpg"
+              src={`${base}images/collection-eternity.jpg`}
               alt="Коллекция Eternity"
               width="700"
               height="500"
@@ -68,10 +69,10 @@ const pageDescription = "Коллекции ювелирных украшени�
         </a>
 
         <!-- Minimal -->
-        <a href="/collections/minimal/" class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <a href={`${base}collections/minimal/`} class="group grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div class="img-zoom bg-gray-100 order-2 md:order-1">
             <img
-              src="/images/collection-minimal.jpg"
+              src={`${base}images/collection-minimal.jpg`}
               alt="Коллекция Minimal"
               width="700"
               height="500"

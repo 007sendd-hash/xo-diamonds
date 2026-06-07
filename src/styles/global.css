@@ -3,6 +3,8 @@
    Brand Book: Luxury Minimal, Editorial, Black/Gold
    ============================================================ */
 
+@import "tailwindcss";
+
 /* --- CSS Custom Properties (Design Tokens) --- */
 :root {
   /* === Typography === */

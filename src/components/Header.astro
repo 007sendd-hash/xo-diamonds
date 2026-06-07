@@ -1,6 +1,7 @@
 ---
 // XO Diamonds – Header
 // Fixed top nav: minimal luxury with logo center.
+const base = import.meta.env.BASE_URL;
 ---
 
 <header
@@ -21,24 +22,24 @@
 
     <!-- Desktop nav – left links -->
     <div class="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-gray-600">
-      <a href="/catalog/" class="hover:text-black transition-colors">Каталог</a>
-      <a href="/collections/" class="hover:text-black transition-colors">Коллекции</a>
-      <a href="/about/" class="hover:text-black transition-colors">О бренде</a>
+      <a href={`${base}catalog/`} class="hover:text-black transition-colors">Каталог</a>
+      <a href={`${base}collections/`} class="hover:text-black transition-colors">Коллекции</a>
+      <a href={`${base}about/`} class="hover:text-black transition-colors">О бренде</a>
     </div>
 
     <!-- Logo – center -->
-    <a href="/" class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
+    <a href={`${base}`} class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
       <span class="font-serif text-xl md:text-2xl tracking-[0.08em] text-black leading-none">XO</span>
       <span class="text-[0.5rem] tracking-[0.3em] uppercase text-gray-400 mt-1">Diamonds</span>
     </a>
 
     <!-- Desktop nav – right links -->
     <div class="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-gray-600">
-      <a href="/about/" class="hover:text-black transition-colors">История</a>
-      <a href="/contacts/" class="hover:text-black transition-colors">Контакты</a>
+      <a href={`${base}about/`} class="hover:text-black transition-colors">История</a>
+      <a href={`${base}contacts/`} class="hover:text-black transition-colors">Контакты</a>
       <!-- Cart icon -->
       <a
-        href="/cart/"
+        href={`${base}cart/`}
         class="relative hover:text-black transition-colors"
         x-data="{ count: 0 }"
         x-init="
@@ -63,7 +64,7 @@
 
     <!-- Mobile cart -->
     <a
-      href="/cart/"
+      href={`${base}cart/`}
       class="md:hidden relative p-2"
       x-data="{ count: 0 }"
       x-init="
@@ -94,11 +95,11 @@
     @click.away="open = false"
   >
     <div class="container flex flex-col gap-4 text-sm tracking-[0.1em] uppercase pt-4">
-      <a href="/catalog/" class="block py-1" @click="open = false">Каталог</a>
-      <a href="/collections/" class="block py-1" @click="open = false">Коллекции</a>
-      <a href="/about/" class="block py-1" @click="open = false">О бренде</a>
-      <a href="/delivery/" class="block py-1" @click="open = false">Доставка</a>
-      <a href="/contacts/" class="block py-1" @click="open = false">Контакты</a>
+      <a href={`${base}catalog/`} class="block py-1" @click="open = false">Каталог</a>
+      <a href={`${base}collections/`} class="block py-1" @click="open = false">Коллекции</a>
+      <a href={`${base}about/`} class="block py-1" @click="open = false">О бренде</a>
+      <a href={`${base}delivery/`} class="block py-1" @click="open = false">Доставка</a>
+      <a href={`${base}contacts/`} class="block py-1" @click="open = false">Контакты</a>
     </div>
   </nav>
 </header>

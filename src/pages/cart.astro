@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 
 const pageTitle = "Корзина";
 const pageDescription = "Ваша корзина покупок XO Diamonds. Оформите заказ на ювелирные украшения с CVD бриллиантами.";
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={pageTitle} description={pageDescription}>
@@ -46,7 +47,7 @@ const pageDescription = "Ваша корзина покупок XO Diamonds. О�
       <!-- Empty cart -->
       <div x-show="cart.length === 0" class="py-16 text-center">
         <p class="text-gray-400 mb-6">Ваша корзина пуста</p>
-        <a href="/catalog/" class="btn btn-outline">Перейти в каталог</a>
+        <a href={`${base}catalog/`} class="btn btn-outline">Перейти в каталог</a>
       </div>
 
       <!-- Cart items -->
@@ -111,7 +112,7 @@ const pageDescription = "Ваша корзина покупок XO Diamonds. О�
               <span class="font-medium"><span x-text="formatPrice(total)"></span> ₽</span>
             </div>
             <p class="text-xs text-gray-400 mb-8">Доставка рассчитывается при оформлении</p>
-            <a href="/checkout/" class="btn btn-primary w-full text-center">
+            <a href={`${base}checkout/`} class="btn btn-primary w-full text-center">
               Оформить заказ
             </a>
           </div>

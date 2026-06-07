@@ -21,6 +21,7 @@ const { data } = product;
 
 const pageTitle = data.title;
 const pageDescription = `${data.title} — ${data.material ?? "золото 585 пробы"}, бриллиант ${data.diamondType ?? "CVD"} ${data.carat ?? ""}. ${(data.description ?? "").slice(0, 120)}...`;
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={pageTitle} description={pageDescription} ogImage={data.images[0]}>
@@ -28,9 +29,9 @@ const pageDescription = `${data.title} — ${data.material ?? "золото 585 
     <div class="container">
       <!-- Breadcrumbs -->
       <nav class="text-xs tracking-[0.05em] text-gray-400 mb-8">
-        <a href="/" class="hover:text-black transition-colors">Главная</a>
+        <a href={`${base}`} class="hover:text-black transition-colors">Главная</a>
         <span class="mx-2">/</span>
-        <a href="/catalog/" class="hover:text-black transition-colors">Каталог</a>
+        <a href={`${base}catalog/`} class="hover:text-black transition-colors">Каталог</a>
         <span class="mx-2">/</span>
         <span class="text-black">{data.title}</span>
       </nav>
@@ -190,7 +191,7 @@ const pageDescription = `${data.title} — ${data.material ?? "золото 585 
         <div class="grid-3">
           <div class="product-card">
             <div class="img-zoom bg-gray-100">
-              <img src="/images/products/earrings-stud-1.jpg" alt="Серьги-пусеты" class="w-full aspect-[3/4] object-cover" />
+              <img src={`${base}images/products/earrings-stud-1.jpg`} alt="Серьги-пусеты" class="w-full aspect-[3/4] object-cover" />
             </div>
             <div class="mt-4">
               <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Серьги</span>
@@ -200,7 +201,7 @@ const pageDescription = `${data.title} — ${data.material ?? "золото 585 
           </div>
           <div class="product-card">
             <div class="img-zoom bg-gray-100">
-              <img src="/images/products/pendant-cross-1.jpg" alt="Подвеска Cross" class="w-full aspect-[3/4] object-cover" />
+              <img src={`${base}images/products/pendant-cross-1.jpg`} alt="Подвеска Cross" class="w-full aspect-[3/4] object-cover" />
             </div>
             <div class="mt-4">
               <span class="text-[0.625rem] tracking-[0.15em] uppercase text-gray-400">Подвески</span>

@@ -6,6 +6,7 @@ import Base from "../layouts/Base.astro";
 const pageTitle = "XO Diamonds";
 const pageDescription =
   "Премиальные ювелирные украшения с CVD бриллиантами. Лабораторная чистота, природная красота. Откройте коллекцию XO Diamonds.";
+const base = import.meta.env.BASE_URL;
 ---
 
 <Base title={pageTitle} description={pageDescription}>
@@ -17,7 +18,7 @@ const pageDescription =
     <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80 z-10"></div>
     <div
       class="absolute inset-0 bg-cover bg-center opacity-70"
-      style="background-image: url('/images/hero-bg.jpg')"
+      style={`background-image: url('${base}images/hero-bg.jpg')`}
     ></div>
 
     <!-- Content -->
@@ -31,8 +32,8 @@ const pageDescription =
           Ювелирные украшения с CVD бриллиантами для тех, кто выбирает осознанную роскошь.
         </p>
         <div class="flex flex-wrap gap-4 animate-fade-up" style="animation-delay: 0.3s;">
-          <a href="/catalog/" class="btn btn-primary btn-lg">Смотреть каталог</a>
-          <a href="/about/" class="btn btn-outline btn-lg !border-gray-500 !text-white hover:!border-white">О бренде</a>
+          <a href={`${base}catalog/`} class="btn btn-primary btn-lg">Смотреть каталог</a>
+          <a href={`${base}about/`} class="btn btn-outline btn-lg !border-gray-500 !text-white hover:!border-white">О бренде</a>
         </div>
       </div>
     </div>
@@ -57,10 +58,10 @@ const pageDescription =
       <div class="grid-3">
         <!-- Product cards – hardcoded for now, later from content collection -->
         <div class="product-card group">
-          <a href="/catalog/ring-solitaire-cvd-1-5ct/" class="block">
+          <a href={`${base}catalog/ring-solitaire-cvd-1-5ct/`} class="block">
             <div class="img-zoom relative bg-gray-100">
               <img
-                src="/images/products/ring-solitaire-1.jpg"
+                src={`${base}images/products/ring-solitaire-1.jpg`}
                 alt="Кольцо Solitaire CVD 1.5ct"
                 width="600"
                 height="800"
@@ -79,10 +80,10 @@ const pageDescription =
         </div>
 
         <div class="product-card group">
-          <a href="/catalog/earrings-cvd-stud-0-8ct/" class="block">
+          <a href={`${base}catalog/earrings-cvd-stud-0-8ct/`} class="block">
             <div class="img-zoom relative bg-gray-100">
               <img
-                src="/images/products/earrings-stud-1.jpg"
+                src={`${base}images/products/earrings-stud-1.jpg`}
                 alt="Серьги-пусеты CVD 0.8ct"
                 width="600"
                 height="800"
@@ -101,10 +102,10 @@ const pageDescription =
         </div>
 
         <div class="product-card group">
-          <a href="/catalog/pendant-cvd-cross-1ct/" class="block">
+          <a href={`${base}catalog/pendant-cvd-cross-1ct/`} class="block">
             <div class="img-zoom relative bg-gray-100">
               <img
-                src="/images/products/pendant-cross-1.jpg"
+                src={`${base}images/products/pendant-cross-1.jpg`}
                 alt="Подвеска Cross CVD 1ct"
                 width="600"
                 height="800"
@@ -121,7 +122,7 @@ const pageDescription =
       </div>
 
       <div class="text-center mt-12">
-        <a href="/catalog/" class="btn btn-outline">Весь каталог</a>
+        <a href={`${base}catalog/`} class="btn btn-outline">Весь каталог</a>
       </div>
     </div>
   </section>
@@ -134,7 +135,7 @@ const pageDescription =
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
         <div class="img-zoom order-2 md:order-1">
           <img
-            src="/images/brand-intro.jpg"
+            src={`${base}images/brand-intro.jpg`}
             alt="XO Diamonds – лабораторная чистота"
             width="700"
             height="900"
@@ -155,7 +156,7 @@ const pageDescription =
             Безупречное качество, минималистичный дизайн, абсолютная прозрачность
             происхождения каждого камня.
           </p>
-          <a href="/about/" class="btn btn-gold">Узнать больше</a>
+          <a href={`${base}about/`} class="btn btn-gold">Узнать больше</a>
         </div>
       </div>
     </div>
@@ -173,9 +174,9 @@ const pageDescription =
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="/collections/solitaire/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+        <a href={`${base}collections/solitaire/`} class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
           <img
-            src="/images/collection-solitaire.jpg"
+            src={`${base}images/collection-solitaire.jpg`}
             alt="Коллекция Solitaire"
             width="500"
             height="625"
@@ -187,9 +188,9 @@ const pageDescription =
           </div>
         </a>
 
-        <a href="/collections/eternity/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+        <a href={`${base}collections/eternity/`} class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
           <img
-            src="/images/collection-eternity.jpg"
+            src={`${base}images/collection-eternity.jpg`}
             alt="Коллекция Eternity"
             width="500"
             height="625"
@@ -201,9 +202,9 @@ const pageDescription =
           </div>
         </a>
 
-        <a href="/collections/minimal/" class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
+        <a href={`${base}collections/minimal/`} class="group relative block aspect-[4/5] overflow-hidden bg-gray-100">
           <img
-            src="/images/collection-minimal.jpg"
+            src={`${base}images/collection-minimal.jpg`}
             alt="Коллекция Minimal"
             width="500"
             height="625"

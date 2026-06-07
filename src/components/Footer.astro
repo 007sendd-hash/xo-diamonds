@@ -1,6 +1,7 @@
 ---
 // XO Diamonds – Footer
 // Minimal luxury footer with gold accent.
+const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="bg-black text-white">
@@ -8,7 +9,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
       <!-- Brand -->
       <div class="md:col-span-1">
-        <a href="/" class="inline-flex flex-col">
+        <a href={`${base}`} class="inline-flex flex-col">
           <span class="font-serif text-2xl tracking-[0.08em] text-white leading-none">XO</span>
           <span class="text-[0.5rem] tracking-[0.3em] uppercase text-gray-400 mt-1">Diamonds</span>
         </a>
@@ -21,11 +22,11 @@
       <div>
         <h4 class="text-xs tracking-[0.15em] uppercase text-gray-300 mb-6">Каталог</h4>
         <ul class="space-y-3 text-sm text-gray-400">
-          <li><a href="/catalog/" class="hover:text-white transition-colors">Все изделия</a></li>
-          <li><a href="/catalog/?category=rings" class="hover:text-white transition-colors">Кольца</a></li>
-          <li><a href="/catalog/?category=earrings" class="hover:text-white transition-colors">Серьги</a></li>
-          <li><a href="/catalog/?category=pendants" class="hover:text-white transition-colors">Подвески</a></li>
-          <li><a href="/catalog/?category=bracelets" class="hover:text-white transition-colors">Браслеты</a></li>
+          <li><a href={`${base}catalog/`} class="hover:text-white transition-colors">Все изделия</a></li>
+          <li><a href={`${base}catalog/?category=rings`} class="hover:text-white transition-colors">Кольца</a></li>
+          <li><a href={`${base}catalog/?category=earrings`} class="hover:text-white transition-colors">Серьги</a></li>
+          <li><a href={`${base}catalog/?category=pendants`} class="hover:text-white transition-colors">Подвески</a></li>
+          <li><a href={`${base}catalog/?category=bracelets`} class="hover:text-white transition-colors">Браслеты</a></li>
         </ul>
       </div>
 
@@ -33,11 +34,11 @@
       <div>
         <h4 class="text-xs tracking-[0.15em] uppercase text-gray-300 mb-6">Информация</h4>
         <ul class="space-y-3 text-sm text-gray-400">
-          <li><a href="/about/" class="hover:text-white transition-colors">О бренде</a></li>
-          <li><a href="/delivery/" class="hover:text-white transition-colors">Доставка и оплата</a></li>
-          <li><a href="/faq/" class="hover:text-white transition-colors">FAQ</a></li>
-          <li><a href="/guide/cvd-diamonds/" class="hover:text-white transition-colors">Гид по CVD</a></li>
-          <li><a href="/contacts/" class="hover:text-white transition-colors">Контакты</a></li>
+          <li><a href={`${base}about/`} class="hover:text-white transition-colors">О бренде</a></li>
+          <li><a href={`${base}delivery/`} class="hover:text-white transition-colors">Доставка и оплата</a></li>
+          <li><a href={`${base}faq/`} class="hover:text-white transition-colors">FAQ</a></li>
+          <li><a href={`${base}guide/cvd-diamonds/`} class="hover:text-white transition-colors">Гид по CVD</a></li>
+          <li><a href={`${base}contacts/`} class="hover:text-white transition-colors">Контакты</a></li>
         </ul>
       </div>
 
